@@ -13,7 +13,7 @@ License: GPLv2 or later
     Copyright 2013  NEW NINE MEDIA, L.P.  (tel : +1-800-288-9699)
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
+    it under the terms of the GNU General Public License, version 2, as
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -47,20 +47,20 @@ class FontAwesomeFour {
 
     function menu( $nav ){
         $menu_item = preg_replace_callback(
-            '/(<li[^>]+class=")([^"]+)("?[^>]+>[^>]+>)([^<]+)<\/a>/',
+            '/(<li[^>]+class=")([^"]+)("?[^>]+>[^>]+>)(.*)<\/a>/',
             array( $this, 'replace' ),
             $nav
         );
         return $menu_item;
     }
-    
+
     function replace( $a ){
         $start = $a[ 1 ];
         $classes = $a[ 2 ];
         $rest = $a[ 3 ];
         $text = $a[ 4 ];
         $before = true;
-        
+
         $class_array = explode( ' ', $classes );
         $fontawesome_classes = array();
         foreach( $class_array as $key => $val ){
@@ -76,7 +76,7 @@ class FontAwesomeFour {
                 }
             }
         }
-        
+
         if( !empty( $fontawesome_classes ) ){
             $fontawesome_classes[] = 'fa';
             if( $before ){
@@ -87,11 +87,11 @@ class FontAwesomeFour {
         } else {
             $newtext = $text;
         }
-        
+
         $item = $start.implode( ' ', $class_array ).$rest.$newtext.'</a>';
         return $item;
     }
-    
+
     function shortcode_icon( $atts ){
         extract( shortcode_atts( array(
             'class' => '',
@@ -110,7 +110,7 @@ class FontAwesomeFour {
             return '<i class="'.implode( ' ', $class_array ).'"></i>';
         }
     }
-    
+
     function shortcode_stack( $atts, $content = null ){
         extract( shortcode_atts( array(
             'class' => '',
@@ -136,8 +136,8 @@ class FontAwesomeFour {
         wp_register_style( 'font-awesome-four', plugins_url( 'css/font-awesome.min.css', __FILE__ ), array(), '4.0.3', 'all' );
         wp_enqueue_style( 'font-awesome-four' );
     }
-    
-    
+
+
     function __construct(){
         add_action( 'admin_notices', array( $this, 'admin_notice' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
